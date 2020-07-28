@@ -70,6 +70,8 @@ private static String streamToString(InputStream stream)throws IOException{
 	while((data = bufferedReader.readLine())!= null){
 		buffer.append(data);
 	}
+	
+	LOGGER.info("from HttpConnection completed for URL: "+ buffer.toString());
 	return buffer.toString();
 	
 }
