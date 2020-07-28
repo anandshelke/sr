@@ -15,25 +15,18 @@ public class UpdateOCSInfoDelegate implements JavaDelegate{
 	
 	String amount = (String) execution.getVariable("amount");
 	Double requestedAmount =Double.parseDouble(amount);
-	String payment_method =(String) execution.getVariable("payment_method");
 	MtxRequestSubscriberAdjustBalance adjustBalance = new MtxRequestSubscriberAdjustBalance();
-	if(payment_method.equals("credit-card")){
-		LOGGER.info("updating OCS infor for payment method credit card..");
+	
+		LOGGER.info("updating OCS information for payment success..");
 		adjustBalance.setAdjustType(1);
 		adjustBalance.setAmount(requestedAmount);
 		adjustBalance.setReason("Goodwill");
 		
-	}
-	else{
-		LOGGER.info("updating OCS infor for payment method direct debit from balance..");
-		adjustBalance.setAdjustType(2);
-		adjustBalance.setAmount(requestedAmount);
-		adjustBalance.setReason("Goodwill");
-	}
 	
 	String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
 	LOGGER.info("updating OCS info with input xml data: "+xmlRequestString);
-		String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-356/wallet/"+adjustBalance.getAdjustType()+"/adjustment";
+	
+	String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-356/wallet/2/adjustment";
 	String ocsResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
 	LOGGER.info("OCS Update Response Information: "+ocsResponse);
 	LOGGER.info("updating OCS Information from UpdateOCSInfoDelegate completed.....");

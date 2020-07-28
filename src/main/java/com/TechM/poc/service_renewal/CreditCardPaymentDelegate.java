@@ -29,14 +29,19 @@ public class CreditCardPaymentDelegate implements JavaDelegate {
 		String decrypt = EcnryptData.aesDecryption(encrypt);
 		LOGGER.info("Decrypted data is :" + decrypt);
 		
-		String response =HttpConnection.httpConnection("http://125.16.139.20:8281/ecom/sale", "POST", gson.toJson(json), null, null,"b66e581f-9d04-3701-a65e-d3960ac7a4e1","application/json");
-		LOGGER.info("credit card response: "+response);
-		JsonObject responseObject = (JsonObject) parser.parse(response);
-		if(responseObject.get("responseCode")!= null && (responseObject.get("responseCode").equals("0000")))
+		//String response =HttpConnection.httpConnection("http://125.16.139.20:8281/ecom/sale", "POST", gson.toJson(json), null, null,"b66e581f-9d04-3701-a65e-d3960ac7a4e1","application/json");
+		//LOGGER.info("credit card response: "+response);
+		//JsonObject responseObject = (JsonObject) parser.parse(response);
+		//if(responseObject.get("responseCode")!= null && (responseObject.get("responseCode").equals("0000")))
 		execution.setVariable("isPaymentSucess", Boolean.TRUE);
+		//else
+			//execution.setVariable("isPaymentSucess", Boolean.FALSE);
+		String amount = (String) execution.getVariable("amount");
+		Double requestedAmount =Double.parseDouble(amount);
+		if(requestedAmount<30)
+			execution.setVariable("isPaymentSucess", Boolean.TRUE);
 		else
 			execution.setVariable("isPaymentSucess", Boolean.FALSE);
-		
 		LOGGER.info("credit card payment from CreditCardPaymentDelegate completed..");
 	}
 
