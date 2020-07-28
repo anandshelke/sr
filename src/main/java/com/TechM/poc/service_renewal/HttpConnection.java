@@ -71,7 +71,7 @@ private static String streamToString(InputStream stream)throws IOException{
 		buffer.append(data);
 	}
 	
-	LOGGER.info("from HttpConnection completed for URL: "+ buffer.toString());
+	LOGGER.info("from HttpConnection completed buffer to string: "+ buffer.toString());
 	return buffer.toString();
 	
 }
