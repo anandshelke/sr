@@ -26,7 +26,7 @@ public class UpdateOCSInfoDelegate implements JavaDelegate{
 	String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
 	LOGGER.info("updating OCS info with input xml data: "+xmlRequestString);
 	
-	String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-356/wallet/2/adjustment";
+	String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/2/adjustment";
 	String ocsResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
 	LOGGER.info("OCS Update Response Information: "+ocsResponse);
 	LOGGER.info("updating OCS Information from UpdateOCSInfoDelegate completed.....");

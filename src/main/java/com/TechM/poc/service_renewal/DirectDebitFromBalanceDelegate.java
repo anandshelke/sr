@@ -25,7 +25,7 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		
 		String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
 		
-		String url=" http://10.7.23.86:Port/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
+		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
 		String debitResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
 		LOGGER.info("dirct debit Response : "+debitResponse);
 		
