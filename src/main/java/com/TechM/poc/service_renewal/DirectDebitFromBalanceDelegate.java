@@ -4,8 +4,9 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.json.JSONObject;
+import org.json.XML;
 
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class DirectDebitFromBalanceDelegate implements JavaDelegate {
@@ -16,6 +17,7 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 
 		LOGGER.info("direct debit from balance in DirectDebitFromBalanceDelegate started..");
+		try{
 		String amount = (String) execution.getVariable("amount");
 		
 		Double requestedAmount =Double.parseDouble(amount);
@@ -31,15 +33,27 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		
 		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
 		String debitResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
-		LOGGER.info("dirct debit Response : "+debitResponse);
+		LOGGER.info("dirct debit Response as XML String : "+debitResponse);
 		
-		JsonObject responseObject = (JsonObject) parser.parse(debitResponse);
-		if(responseObject.get("responseCode")!= null && (responseObject.get("responseCode").equals("0000")))
-		execution.setVariable("isPaymentSucess", Boolean.TRUE);
-		else
+		 JSONObject debitResponseJsonObject = XML.toJSONObject(debitResponse);
+	       if(debitResponseJsonObject.has("MtxResponse")){
+	    	   
+		    	   JSONObject mtxResponseJsonObject =debitResponseJsonObject.getJSONObject("MtxResponse");
+		        if(mtxResponseJsonObject.get("ResultText")!= null && mtxResponseJsonObject.get("ResultText").equals("OK"))
+		        	 execution.setVariable("isPaymentSucess", Boolean.TRUE);
+		        else
+					execution.setVariable("isPaymentSucess", Boolean.FALSE);
+	       }
+		   else{
+			   LOGGER.info("dirct debit Response not as expected.");
 			execution.setVariable("isPaymentSucess", Boolean.FALSE);
+		   }
+	        
+		}catch(Exception ex){
+			LOGGER.info("error occoured in DirectDebitFromBalanceDelegate class");
+			ex.printStackTrace();
+		}
 		LOGGER.info("direct debit from balance in DirectDebitFromBalanceDelegate completed..");
 	}
 
-	
 }
