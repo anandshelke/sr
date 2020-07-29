@@ -28,10 +28,6 @@ public class HttpConnection {
 		try {
 			requestUrl = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
-			if(method.equals("PATCH")){
-				connection.setRequestMethod("POST");
-				connection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
-			}else
 			connection.setRequestMethod(method);
 			
 			connection.setRequestProperty("Content-Type", contentType);

@@ -17,13 +17,17 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 
 		LOGGER.info("direct debit from balance in DirectDebitFromBalanceDelegate started..");
 		String amount = (String) execution.getVariable("amount");
+		
 		Double requestedAmount =Double.parseDouble(amount);
+		LOGGER.info("direct debit from balance for amount:"+requestedAmount); 
+		
 		MtxRequestSubscriberAdjustBalance adjustBalance = new MtxRequestSubscriberAdjustBalance();
 		adjustBalance.setAdjustType(2);
 		adjustBalance.setAmount(requestedAmount);
 		adjustBalance.setReason("Goodwill");
 		
 		String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
+		LOGGER.info("direct debit from balance with input xml string data: "+xmlRequestString);
 		
 		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
 		String debitResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
@@ -37,4 +41,5 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		LOGGER.info("direct debit from balance in DirectDebitFromBalanceDelegate completed..");
 	}
 
+	
 }

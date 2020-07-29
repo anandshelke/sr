@@ -3,39 +3,36 @@ package com.TechM.poc.service_renewal;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="MtxRequestSubscriberAdjustBalance")
 public class MtxRequestSubscriberAdjustBalance {
 
-	private int AdjustType;
-	private Double Amount;
-	private String Reason;
+	private int adjustType;
+	private Double amount;
+	private String reason;
 	
-	@XmlElement
+	@XmlElement(name="AdjustType")
 	public int getAdjustType() {
-		return AdjustType;
+		return adjustType;
 	}
-	
 	public void setAdjustType(int adjustType) {
-		AdjustType = adjustType;
+		this.adjustType = adjustType;
 	}
-	@XmlElement
+	@XmlElement(name="Amount")
 	public Double getAmount() {
-		return Amount;
+		return amount;
 	}
-	
 	public void setAmount(Double amount) {
-		Amount = amount;
+		this.amount = amount;
 	}
-	
-	@XmlElement
+	@XmlElement(name="Reason")
 	public String getReason() {
-		return Reason;
+		return reason;
 	}
-	
 	
 	public void setReason(String reason) {
-		Reason = reason;
+		this.reason = reason;
 	}
+	
 	
 	
 }

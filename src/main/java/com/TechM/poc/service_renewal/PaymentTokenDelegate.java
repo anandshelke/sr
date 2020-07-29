@@ -20,7 +20,7 @@ public class PaymentTokenDelegate  implements JavaDelegate{
  @Override
  public void execute(DelegateExecution execution){
 	 try {
-		 
+		 LOGGER.info("payment token delegate started..");
      String subscriberId =(String) execution.getVariable("subscriber_id");
      LOGGER.info("Payment token request for subscriber ID: " + subscriberId);
     
@@ -48,7 +48,7 @@ public class PaymentTokenDelegate  implements JavaDelegate{
 	 else
 		 execution.setVariable("payment_method","balance-debit");
      
-     
+	 LOGGER.info("payment token delegate completed..");
      
      } catch (IOException e) {
          e.printStackTrace();
