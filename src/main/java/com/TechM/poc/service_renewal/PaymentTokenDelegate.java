@@ -39,7 +39,7 @@ public class PaymentTokenDelegate  implements JavaDelegate{
         String token = paymentJsonObject.get("token").getAsString();
        
      LOGGER.info("received Payment Method for subscriber ID: "+subscriberId+" is"+payment_method +" and TOKEN will be: "+token);
-        execution.setVariable("payment_method","credit-card");
+     execution.setVariable("payment_method","credit-card");
      } catch (IOException e) {
          e.printStackTrace();
      }
