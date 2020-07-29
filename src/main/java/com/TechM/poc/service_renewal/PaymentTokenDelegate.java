@@ -39,7 +39,17 @@ public class PaymentTokenDelegate  implements JavaDelegate{
         String token = paymentJsonObject.get("token").getAsString();
        
      LOGGER.info("received Payment Method for subscriber ID: "+subscriberId+" is"+payment_method +" and TOKEN will be: "+token);
-     execution.setVariable("payment_method","credit-card");
+     
+     //Anand - Using temporary check such that all payments below 30 are CC and above 30 are Balance debit
+     String amount = (String) execution.getVariable("amount");
+	 Double requestedAmount =Double.parseDouble(amount);
+	 if(requestedAmount<30)
+		 execution.setVariable("payment_method","credit-card");
+	 else
+		 execution.setVariable("payment_method","balance-debit");
+     
+     
+     
      } catch (IOException e) {
          e.printStackTrace();
      }
