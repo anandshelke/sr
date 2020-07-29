@@ -28,7 +28,12 @@ public class HttpConnection {
 		try {
 			requestUrl = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+			if(method.equals("PATCH")){
+				connection.setRequestMethod("POST");
+				connection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+			}else
 			connection.setRequestMethod(method);
+			
 			connection.setRequestProperty("Content-Type", contentType);
 			if(username!=null && password!=null){
 				String encodeString =Base64.getEncoder().encodeToString((username+":"+password).getBytes(StandardCharsets.UTF_8));
@@ -70,8 +75,6 @@ private static String streamToString(InputStream stream)throws IOException{
 	while((data = bufferedReader.readLine())!= null){
 		buffer.append(data);
 	}
-	
-	LOGGER.info("from HttpConnection completed buffer to string: "+ buffer.toString());
 	return buffer.toString();
 	
 }
