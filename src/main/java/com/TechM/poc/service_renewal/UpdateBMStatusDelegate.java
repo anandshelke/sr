@@ -11,6 +11,12 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class UpdateBMStatusDelegate implements JavaDelegate{
 	
 	private final Logger LOGGER = Logger.getLogger(LoggerDelegate.class.getName());
@@ -36,8 +42,18 @@ public class UpdateBMStatusDelegate implements JavaDelegate{
 		requestObject.addProperty("status", "SUSPENDED");
 	}
 	
-	String bmResponse =HttpConnection.httpConnection(url, "PATCH", gson.toJson(requestObject), null, null, null, "application/json");
-	LOGGER.info("BM status Update response: "+bmResponse);
+//	String bmResponse =HttpConnection.httpConnection(url, "PATCH", gson.toJson(requestObject), null, null, null, "application/json");
+	OkHttpClient client = new OkHttpClient().newBuilder()
+	  .build();
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"status\": \"ACTIVE\",\r\n  \"contractEndDate\": \"2023-05-28T07:00:44.569Z\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://demo-vnext-om.tmbmarble.com/product-inventory-business-service/v1/product-inventory/product/S1595660005239549")
+	  .method("PATCH", body)
+	  .addHeader("Content-Type", "application/json")
+	  .build();
+	Response response = client.newCall(request).execute();
+    LOGGER.info("BM status Update response: "+ response);
 	
 	LOGGER.info("updating BM status from UpdateBMStatusDelegate completed....");
 	}
