@@ -37,16 +37,38 @@ public class PaymentTokenDelegate  implements JavaDelegate{
   
         String payment_method = paymentJsonObject.get("method").getAsString();
         String token = paymentJsonObject.get("token").getAsString();
+        
+        String in_payment_method = (String) execution.getVariable("in_payment_method");
+        String in_payment_token = (String) execution.getVariable("in_payment_token");
+        
+        //If BM provides proper value, use it. Else use the invocation time value
+        if(payment_method.equals("credit-card") || payment_method.equals("prepaid-balance"))
+	   	 {
+        	execution.setVariable("payment_method",payment_method);
+        	LOGGER.info("Setting value from the payment mode value of " + payment_method);
+	   		 
+	   	 }
+	   	 else
+	   	 {
+		   	execution.setVariable("payment_method", in_payment_method);	   		 
+	   		LOGGER.info("Setting it to call value to " + in_payment_method);
+	   	 }
+        
+        //Setting token to the token received from BM
+        execution.setVariable("payment_token", token);
+        
+        //This should be removed if BM is sending correct token
+        execution.setVariable("payment_token",in_payment_token);
        
      LOGGER.info("received Payment Method for subscriber ID: "+subscriberId+" is"+payment_method +" and TOKEN will be: "+token);
      
      //Anand - Using temporary check such that all payments below 30 are CC and above 30 are Balance debit
-     String amount = (String) execution.getVariable("amount");
-	 Double requestedAmount =Double.parseDouble(amount);
-	 if(requestedAmount<30)
-		 execution.setVariable("payment_method","credit-card");
-	 else
-		 execution.setVariable("payment_method","balance-debit");
+//     String amount = (String) execution.getVariable("amount");
+//	 Double requestedAmount =Double.parseDouble(amount);
+//	 if(requestedAmount<30)
+//		 execution.setVariable("payment_method","credit-card");
+//	 else
+//		 execution.setVariable("payment_method","balance-debit");
      
 	 LOGGER.info("payment token delegate completed..");
      
@@ -57,5 +79,20 @@ public class PaymentTokenDelegate  implements JavaDelegate{
     	 ex.printStackTrace();
      }
  }
+ 
+ public static void main(String[] args) {
+	 String token = "credit-card1";
+	 if(token.equals("credit-card") || token.equals("prepaid-balance"))
+	 {
+		 System.out.println("Setting value from the input value of " + token);
+		 
+	 }
+	 else
+	 {
+		 System.out.println("Setting it to call value to credit card");
+		 token = "credit-card";
+	 }
+			 
+}
 
 }
