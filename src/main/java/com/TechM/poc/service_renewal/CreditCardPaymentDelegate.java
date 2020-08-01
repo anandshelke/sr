@@ -67,8 +67,8 @@ public class CreditCardPaymentDelegate implements JavaDelegate {
 			//execution.setVariable("isPaymentSucess", Boolean.FALSE);
 		
 		//Anand - Work around to fake success or failure. Should be removed when Comviva call works
-		String amount = (String) execution.getVariable("amount");
-		Double requestedAmount =Double.parseDouble(amount);
+//		String amount = (String) execution.getVariable("amount");
+//		Double requestedAmount =Double.parseDouble(amount);
 		
 //		if(requestedAmount<30)
 //			execution.setVariable("isPaymentSucess", Boolean.TRUE);

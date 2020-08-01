@@ -26,12 +26,20 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		MtxRequestSubscriberAdjustBalance adjustBalance = new MtxRequestSubscriberAdjustBalance();
 		adjustBalance.setAdjustType(2);
 		adjustBalance.setAmount(requestedAmount);
-		adjustBalance.setReason("Goodwill");
+		adjustBalance.setReason("Deducting as PPM is prepaid-balance");
 		
 		String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
 		LOGGER.info("direct debit from balance with input xml string data: "+xmlRequestString);
 		
-		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
+//		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
+		String subscriberId = (String) execution.getVariable("subscriber_id");
+//		Setting the subscriber id to what OCS provided in case BM and OCS are not in sync
+		subscriberId = "0-1-5-386";
+		
+		String wallet = "1";
+		String url = "http://10.7.23.86:8080/rsgateway/data/v3/subscriber/" + subscriberId + "/wallet/"+wallet+"/adjustment";
+		LOGGER.info("OCS URL "+ url);
+		
 		String debitResponse =HttpConnection.httpConnection(url, "PUT", xmlRequestString, null, null, null, "application/xml");
 		LOGGER.info("dirct debit Response as XML String : "+debitResponse);
 		
@@ -55,5 +63,5 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		}
 		LOGGER.info("direct debit from balance in DirectDebitFromBalanceDelegate completed..");
 	}
-
+	
 }
