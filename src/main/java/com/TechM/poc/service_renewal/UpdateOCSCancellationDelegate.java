@@ -47,9 +47,41 @@ public class UpdateOCSCancellationDelegate implements JavaDelegate{
 		
 //		String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-416/offers/2";
 //		String ocsResponse =HttpConnection.httpConnection(url, "DELETE", null, null, null, null, "application/xml");
-		LOGGER.info("OCS cancellation Response Information: "+ ocsResponse.body().toString());
+		LOGGER.info("OCS cancellation Response Information: "+ ocsResponse.body().string());
 		LOGGER.info("Cancellation of service in OCS completed. UpdateOCSCancellationDelegate completed.....");
 		
 	}
 
+	
+//	public static void main(String[] args) {
+//
+//
+////		Setting the subscriber id to what OCS provided in case BM and OCS are not in sync
+//		String subscriberId = "0-1-5-386";
+//		String offers = "2";
+//		String url = "http://10.7.23.86:8080/rsgateway/data/v3/subscriber/" + subscriberId + "/offers/"+offers;
+//		System.out.println("OCS URL for cancellation of service "+ url);
+//		
+//		try {
+//			OkHttpClient client = new OkHttpClient().newBuilder()
+//					  .build();
+//		MediaType mediaType = MediaType.parse("text/plain");
+//		RequestBody body = RequestBody.create(mediaType, "");
+//		Request request = new Request.Builder()
+////					  .url("http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-416/offers/2")
+//		  .url(url)
+//		  .method("DELETE", body)
+//		  .build();
+//		Response ocsResponse = client.newCall(request).execute();
+//		
+////					String url="http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-416/offers/2";
+////					String ocsResponse =HttpConnection.httpConnection(url, "DELETE", null, null, null, null, "application/xml");
+//		System.out.println("OCS cancellation Response Information: "+ ocsResponse.body().string());
+//
+//		System.out.println("Cancellation of service in OCS completed. UpdateOCSCancellationDelegate completed.....");
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		
+//	}
 }

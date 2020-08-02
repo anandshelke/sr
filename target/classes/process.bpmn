@@ -4,9 +4,9 @@
     <bpmn:startEvent id="StartEventProcessStarted" name="Process&#10;started">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="subscriber_id" label="Subscriber id" type="string" defaultValue="S1595660005239549" />
+          <camunda:formField id="subscriber_id" label="Subscriber id" type="string" defaultValue="MHS1596289393297997" />
           <camunda:formField id="amount" label="Amount " type="string" defaultValue="10" />
-          <camunda:formField id="in_payment_method" label="Preferred Payment Method" type="string" defaultValue="credit-card" />
+          <camunda:formField id="in_payment_method" label="Preferred Payment Method" type="string" defaultValue="Credit Card" />
           <camunda:formField id="in_payment_token" label="Payment Token" type="string" defaultValue="RE20072908044300387" />
           <camunda:formField id="ocs_subscriber_id" label="OCS Subscriber Id" type="string" defaultValue="0-1-5-386" />
         </camunda:formData>
@@ -29,10 +29,10 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1hd2uyu" sourceRef="Activity_1ey7bxc" targetRef="Gateway_04fompu" />
     <bpmn:sequenceFlow id="Flow_08aadg9" name="PPM is credit card" sourceRef="Gateway_04fompu" targetRef="Activity_1y05276">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment_method=="credit-card"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment_method=="Credit Card"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1f684ef" name="PPM is prepaid balance" sourceRef="Gateway_04fompu" targetRef="Activity_0t98q0d">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment_method=="balance-debit"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment_method=="Prepaid Balance"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_0t98q0d" name="Deduct from Prepaid balance" camunda:class="com.TechM.poc.service_renewal.DirectDebitFromBalanceDelegate">
       <bpmn:incoming>Flow_1f684ef</bpmn:incoming>
@@ -124,9 +124,6 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="service-renewal">
-      <bpmndi:BPMNShape id="TextAnnotation_13dvsji_di" bpmnElement="TextAnnotation_13dvsji">
-        <dc:Bounds x="160" y="120" width="100" height="96" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_19mfjbd_di" bpmnElement="Flow_19mfjbd">
         <di:waypoint x="820" y="640" />
         <di:waypoint x="882" y="640" />
@@ -285,10 +282,9 @@
       <bpmndi:BPMNShape id="Event_0mkgayn_di" bpmnElement="Event_0mkgayn">
         <dc:Bounds x="882" y="622" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0qtuk17_di" bpmnElement="Association_0qtuk17">
-        <di:waypoint x="274" y="364" />
-        <di:waypoint x="211" y="216" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_13dvsji_di" bpmnElement="TextAnnotation_13dvsji">
+        <dc:Bounds x="160" y="120" width="100" height="96" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1pkvh90_di" bpmnElement="Event_15n4n19">
         <dc:Bounds x="752" y="522" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -298,6 +294,10 @@
       <bpmndi:BPMNShape id="Event_1utdrsi_di" bpmnElement="Event_082c5q1">
         <dc:Bounds x="422" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0qtuk17_di" bpmnElement="Association_0qtuk17">
+        <di:waypoint x="274" y="364" />
+        <di:waypoint x="211" y="216" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

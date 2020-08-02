@@ -42,7 +42,7 @@ public class PaymentTokenDelegate  implements JavaDelegate{
         String in_payment_token = (String) execution.getVariable("in_payment_token");
         
         //If BM provides proper value, use it. Else use the invocation time value
-        if(payment_method.equals("credit-card") || payment_method.equals("prepaid-balance"))
+        if(payment_method.equals("Credit Card") || payment_method.equals("Prepaid Balance"))
 	   	 {
         	execution.setVariable("payment_method",payment_method);
         	LOGGER.info("Setting value from the payment mode value of " + payment_method);
