@@ -10,7 +10,7 @@ private final Logger LOGGER = Logger.getLogger(LoggerDelegate.class.getName());
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-	LOGGER.info("General Failure. Please connect with support");
+	LOGGER.info("General Failure. Please connect with support team");
 	}
 
 }

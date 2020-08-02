@@ -25,11 +25,17 @@ public class UpdateBMStatusDelegate implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		
 	LOGGER.info("updating BM status from UpdateBMStatusDelegate started....");
+	
 	JsonObject requestObject = new JsonObject();
+	
 	String subscriberId =(String) execution.getVariable("subscriber_id");
 	Gson gson = new Gson();
 	Boolean status = (Boolean) execution.getVariable("isPaymentSucess");
+	
 	String url= "https://demo-vnext-om.tmbmarble.com/product-inventory-business-service/v1/product-inventory/product/"+subscriberId;
+//	String url= "https://demo-vnext-om.tmbmarble.com/product-inventory-business-service/v1/product-inventory/product/"+subscriberId;
+	LOGGER.info("URL for BM Update status " + url);
+	
 	if(status==Boolean.TRUE){
 		LOGGER.info("updating BM status as Active..");
 		String date =ZonedDateTime.now( ZoneOffset.UTC ).plusMonths(1).format( DateTimeFormatter.ISO_INSTANT );
@@ -46,9 +52,9 @@ public class UpdateBMStatusDelegate implements JavaDelegate{
 	OkHttpClient client = new OkHttpClient().newBuilder()
 	  .build();
 	MediaType mediaType = MediaType.parse("application/json");
-	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"status\": \"ACTIVE\",\r\n  \"contractEndDate\": \"2023-05-28T07:00:44.569Z\"\r\n}");
+	RequestBody body = RequestBody.create(mediaType, requestObject.toString());
 	Request request = new Request.Builder()
-	  .url("https://demo-vnext-om.tmbmarble.com/product-inventory-business-service/v1/product-inventory/product/S1595660005239549")
+	  .url(url)
 	  .method("PATCH", body)
 	  .addHeader("Content-Type", "application/json")
 	  .build();
@@ -57,4 +63,42 @@ public class UpdateBMStatusDelegate implements JavaDelegate{
 	
 	LOGGER.info("updating BM status from UpdateBMStatusDelegate completed....");
 	}
+	
+//	public static void main(String[] args) {
+//		String subscriberId = "SUB1";
+//		String url= "https://demo-vnext-om.tmbmarble.com/product-inventory-business-service/v1/product-inventory/product/"+subscriberId;
+//		String date =ZonedDateTime.now( ZoneOffset.UTC ).plusMonths(1).format( DateTimeFormatter.ISO_INSTANT );
+//		
+//		
+//		System.out.println("URL- "+ url);
+//		System.out.println("Date - "+ date);
+//		
+//		JsonObject json = new JsonObject();
+//		json.addProperty("status","ACTIVE");
+//		json.addProperty("contractEndDate",date);
+//		
+//		String objJson = json.toString();
+//		
+//		System.out.println("objJson " + objJson);
+//			
+//		try {
+//			OkHttpClient client = new OkHttpClient().newBuilder()
+//					  .build();
+//					MediaType mediaType = MediaType.parse("application/json");
+//					RequestBody body = RequestBody.create(mediaType, objJson);
+//					System.out.println("Body " + body);
+//					Request request = new Request.Builder()
+//					  .url(url)
+//					  .method("PATCH", body)
+//					  .addHeader("Content-Type", "application/json")
+//					  .build();
+//					Response response = client.newCall(request).execute();
+//				    System.out.println("BM status Update response: "+ response);
+//					
+//				    System.out.println("updating BM status from UpdateBMStatusDelegate completed....");
+//		} catch (Exception e) {
+//			System.out.println(e.toString());
+//		}
+//		
+//	}
 }

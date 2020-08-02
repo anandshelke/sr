@@ -80,19 +80,19 @@ public class PaymentTokenDelegate  implements JavaDelegate{
      }
  }
  
- public static void main(String[] args) {
-	 String token = "credit-card1";
-	 if(token.equals("credit-card") || token.equals("prepaid-balance"))
-	 {
-		 System.out.println("Setting value from the input value of " + token);
-		 
-	 }
-	 else
-	 {
-		 System.out.println("Setting it to call value to credit card");
-		 token = "credit-card";
-	 }
-			 
-}
+// public static void main(String[] args) {
+//	 String token = "credit-card1";
+//	 if(token.equals("credit-card") || token.equals("prepaid-balance"))
+//	 {
+//		 System.out.println("Setting value from the input value of " + token);
+//		 
+//	 }
+//	 else
+//	 {
+//		 System.out.println("Setting it to call value to credit card");
+//		 token = "credit-card";
+//	 }
+//			 
+//}
 
 }

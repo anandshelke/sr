@@ -24,12 +24,23 @@ public class UpdateOCSCancellationDelegate implements JavaDelegate{
 		
 		LOGGER.info("Requesting OCS for service cancellation. UpdateOCSCancellationDelegate started.....");
 		
+		String subscriberId = (String) execution.getVariable("ocs_subscriber_id");
+
+//		Setting the subscriber id to what OCS provided in case BM and OCS are not in sync
+//		subscriberId = "0-1-5-386"; OR "0-1-5-416"
+		
+		String offers = "2";
+		String url = "http://10.7.23.86:8080/rsgateway/data/v3/subscriber/" + subscriberId + "/offers/"+offers;
+		LOGGER.info("OCS URL for cancellation of service "+ url);
+		
+		
 		OkHttpClient client = new OkHttpClient().newBuilder()
 		  .build();
 		MediaType mediaType = MediaType.parse("text/plain");
 		RequestBody body = RequestBody.create(mediaType, "");
 		Request request = new Request.Builder()
-		  .url("http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-416/offers/2")
+//		  .url("http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-416/offers/2")
+		  .url(url)
 		  .method("DELETE", body)
 		  .build();
 		Response ocsResponse = client.newCall(request).execute();

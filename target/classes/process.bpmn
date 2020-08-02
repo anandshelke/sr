@@ -8,6 +8,7 @@
           <camunda:formField id="amount" label="Amount " type="string" defaultValue="10" />
           <camunda:formField id="in_payment_method" label="Preferred Payment Method" type="string" defaultValue="credit-card" />
           <camunda:formField id="in_payment_token" label="Payment Token" type="string" defaultValue="RE20072908044300387" />
+          <camunda:formField id="ocs_subscriber_id" label="OCS Subscriber Id" type="string" defaultValue="0-1-5-386" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>

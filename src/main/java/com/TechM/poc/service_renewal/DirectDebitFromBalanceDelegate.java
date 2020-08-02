@@ -21,20 +21,21 @@ public class DirectDebitFromBalanceDelegate implements JavaDelegate {
 		String amount = (String) execution.getVariable("amount");
 		
 		Double requestedAmount =Double.parseDouble(amount);
-		LOGGER.info("direct debit from balance for amount:"+requestedAmount); 
+		LOGGER.info("PPM is direct debit from prepaid balance amount:"+requestedAmount); 
 		
 		MtxRequestSubscriberAdjustBalance adjustBalance = new MtxRequestSubscriberAdjustBalance();
 		adjustBalance.setAdjustType(2);
 		adjustBalance.setAmount(requestedAmount);
-		adjustBalance.setReason("Deducting as PPM is prepaid-balance");
+		adjustBalance.setReason("PPM is set prepaid-balance");
 		
 		String xmlRequestString=HttpConnection.convertToXml(adjustBalance, MtxRequestSubscriberAdjustBalance.class);
 		LOGGER.info("direct debit from balance with input xml string data: "+xmlRequestString);
 		
 //		String url=" http://10.7.23.86:8080/rsgateway/data/v3/subscriber/0-1-5-386/wallet/1/adjustment";
-		String subscriberId = (String) execution.getVariable("subscriber_id");
+		String subscriberId = (String) execution.getVariable("ocs_subscriber_id");
+
 //		Setting the subscriber id to what OCS provided in case BM and OCS are not in sync
-		subscriberId = "0-1-5-386";
+//		subscriberId = "0-1-5-386";
 		
 		String wallet = "1";
 		String url = "http://10.7.23.86:8080/rsgateway/data/v3/subscriber/" + subscriberId + "/wallet/"+wallet+"/adjustment";
